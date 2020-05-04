@@ -1,0 +1,10 @@
+.wrapper {
+    display: flex;
+}
+
+.canvas {
+    margin: auto;
+    background-color: darkgrey;
+    width: 1300px;
+    height: 700px;
+}
