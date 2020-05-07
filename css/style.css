@@ -7,9 +7,15 @@ body{
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+
 }
 
 .canvas {
+    align-content: center;
+}
+
+.region:hover {
+    color: #e54c3c;
 }
 
 text {
