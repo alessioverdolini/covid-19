@@ -1,5 +1,5 @@
-width = 600;
-height = 350;
+width = 1920;
+height = 900;
 
 
 /* Initialize canvas */
@@ -9,14 +9,17 @@ svg = d3.select(".wrapper")
     .attr("width", "100%")
     .attr("height", "100%")
     .attr("viewBox", "0 0 " + width + " " + height + "")
-    .attr("preserveAspectRatio", "xMidYMid meet");
+    .attr("preserveAspectRatio", "xMidYMid meet")
+    .style("background-color", "gray")
+    //.style("background-image", "url(resources/europe4.svg)")
+    .style("background-size", "cover");
 
 function draw(batsArrangements) {
     var bats = svg.selectAll(".bat")
         .data(batsArrangements)
         .enter().append("image")
         .classed("bat", true)
-        .attr('xlink:href', 'resources/alive.svg')
+        .attr('xlink:href', 'resources/virus.svg')
         .attr('id', function (d) {return "bat" + batsArrangements.indexOf(d)})
         .attr('width', 50)
         .attr('height', 50)
@@ -39,7 +42,7 @@ function updateArrangement(batsArrangements) {
 function block(i) {
     svg.select("#bat"+i)
         .attr("blocked", "true")
-        .attr('xlink:href', 'resources/dead.svg')
+        .attr('xlink:href', 'resources/no-virus.svg')
     alive--;
     console.log(alive)
     if(alive===0) {
