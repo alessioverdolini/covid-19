@@ -1,102 +1,96 @@
-width = 1500;
-height = 750;
+width = 750;
+height = 800;
 
 
 
 /* Initialize canvas */
-svg = d3.select(".wrapper")
+svg = d3.select("#wrapper")
     .append("svg")
     .classed("canvas", true)
     .attr("width", "100%")
     .attr("height", "100%")
     .attr("viewBox", "0 0 " + width + " " + height + "");
 
+function initial(data) {
+    data.map(region => {
+            visits[region.id] = 0;
+    });
+}
+
 function drawItaly(regions) {
     console.log(regions);
-    var italy = svg.selectAll(".region")
+    let italy = svg.selectAll(".region")
         .data(regions)
         .enter()
         .append("path")
         .classed("region", true)
         .attr("d", function (d) {return d.d})
         .attr("name", function (d) {return d.name})
-        .attr("id", function (d) {return d.id});
+        .attr("id", function (d) {return d.id})
+        .attr("stroke", "blue")
+        .attr("fill", function () {return d3.interpolateReds(0)});
 }
 
 
 function draw(data) {
-    var bats = svg.selectAll(".bat")
+    let bats = svg.selectAll(".bat")
         .data(data)
-        .enter().append("g")
-        .attr('id', function (d) {return "group" + data.indexOf(d)})
+        .enter()
         .append("image")
         .classed("bat", true)
         .attr('xlink:href', 'resources/virus.svg')
-        .attr('id', function (d) {return "bat" + data.indexOf(d)})
+        .attr('id', function (d) {return "bat" + d.id})
         .attr('width', 40)
         .attr('height', 40)
         .attr('x', function (d) {return d.x})
         .attr('y', function (d) {return d.y})
-        .on("click", function(e, i){
-            block(i)
+        .on("click", function(e){
+            block(e)
         });
 }
 
+
 function updateArrangement(data) {
-    console.log(data);
+    ciclo++;
+
     svg.selectAll(".bat")
         .data(data)
         .transition()
         .duration(1000)
-        .attr('x', function (d, i) {return setPositionX(i, d)})
-        .attr('y', function (d, i) {return setPositionY(i, d)});
+        .attr('id', function (d) {return "bat" + d.id})
+        .attr('x', function (d) {return d.x})
+        .attr('y', function (d) {return d.y});
 
-    svg.select("#region")
-        .attr("fill", "#e54c3c");
+    data.map(region => {visits[region.id]++;});
+
+    svg.selectAll(".region")
+        .transition()
+        .duration(1000)
+        .attr("fill", function (e) {return d3.interpolateReds(visits[e.id]/ciclo);});
 }
 
-//CAMBIO COLORE
-function pippo(i) {
-    if(svg.select("#bat"+i).attr("blocked"))
-        return svg.select("#bat"+i).attr("xlink:href");
-    else
-        return "resources/virusr.svg"
-}
+function block(e) {
+    console.log("regions")
+    console.log(regions);
+    regions = regions.filter(value => value.id !== e.id);
 
-function block(i) {
-    svg.select("#group"+i)
-        .attr("z-index", "-1");
-
-    svg.select("#bat"+i)
-        .attr("blocked", "true")
-        .attr('xlink:href', 'resources/no-virus-r.svg')
-        //.attr("opacity", "0.2")
+    svg.select("#bat"+e.id)
+        .attr("class", "blocked")
+        .attr('xlink:href', 'resources/no-virus.svg')
         .attr('width', 40)
         .attr('height', 40)
-        .on("click", function(){alert("VOLEVIIII")});
+        .on("click", function(){alert("VOLEVIIII")})
+        .exit();
 
     alive--;
-    console.log(alive)
+
     if(alive===0) {
-        svg.selectAll(".bat")
-            .data(batsArrangements)
-            .exit()
+        alert("STATE A CASA!")
+        svg.selectAll(".blocked")
+            .remove();
+        svg.selectAll(".region")
             .remove();
         init();
     }
 
-}
-
-function setPositionX(i, d) {
-    if(svg.select("#bat"+i).attr("blocked"))
-        return svg.select("#bat"+i).attr("x");
-    else
-        return d.x
-}
-
-function setPositionY(i, d) {
-    if(svg.select("#bat"+i).attr("blocked"))
-        return svg.select("#bat"+i).attr("y");
-    else
-        return d.y;
 }

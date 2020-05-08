@@ -3,10 +3,14 @@ let batsArrangements = [];
 let contatore = 0;
 let alive = 21;
 let regions = [];
+let ciclo = 1;
+let visits = {};
 
 function init() {
     contatore = 0;
     alive = 21;
+    visits = {};
+    ciclo = 1;
     setTimeout(function (){
         d3.json("resources/position.json",).then(function (data) {
             dataset = data;
@@ -14,6 +18,7 @@ function init() {
             drawItaly(regions)
             draw(regions);
             addEventListener();
+            initial(regions);
         });
     }, 0);
 }
@@ -45,7 +50,19 @@ function shuffle(array) {
     return array
 }
 
+function loop() {
+    updateArrangement(shuffle(regions));
+}
+
+function start() {
+    setTimeout(function () {
+        setInterval(loop, 3000);
+    }, 0);
+}
+
 
 init();
+
+start();
 
 
