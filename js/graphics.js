@@ -36,13 +36,17 @@ function drawScenario(data) {
         });
 }
 
+function drawInterface() {
+}
+
+
 function updateArrangement(data) {
-    ciclo++;
+    selectable = false;
 
     svg.selectAll(".bat")
         .data(data)
         .transition()
-        .duration(1000)
+        .duration(speed-800)
         .attr('id', function (d) {return "bat" + d.id})
         .attr('x', function (d) {return d.x})
         .attr('y', function (d) {return d.y});
@@ -51,30 +55,26 @@ function updateArrangement(data) {
 
     svg.selectAll(".region")
         .transition()
-        .duration(1000)
-        .attr("fill", function (e) {return d3.interpolateReds(visits[e.id]/ciclo);});
+        .duration(speed-800)
+        .attr("fill", function (e) {return d3.interpolateReds(visits[e.id]/iteration);});
+
+    selectable=true;
 }
 
 function block(e) {
-    regions = regions.filter(value => value.id !== e.id);
+    console.log(selectable)
+    if(selectable) {
+        svg.select("#bat" + e.id)
+            .attr("class", "blocked")
+            .attr('xlink:href', 'resources/no-virus.svg')
+            .attr('width', 40)
+            .attr('height', 40)
+            .on("click", function () {
+            })
+            .exit();
 
-    svg.select("#bat"+e.id)
-        .attr("class", "blocked")
-        .attr('xlink:href', 'resources/no-virus.svg')
-        .attr('width', 40)
-        .attr('height', 40)
-        .on("click", function(){alert("VOLEVIIII")})
-        .exit();
+        regions = regions.filter(value => value.id !== e.id);
 
-    alive--;
-
-    if(alive===0) {
-        alert("STATE A CASA!")
-        svg.selectAll(".blocked")
-            .remove();
-        svg.selectAll(".region")
-            .remove();
-        init();
+        alive--;
     }
-
 }

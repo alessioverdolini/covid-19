@@ -1,8 +1,14 @@
-let contatore;
 let alive;
 let regions;
-let ciclo;
+let iteration;
 let visits;
+let paused;
+let started;
+let loopInterval;
+let speed;
+const MAX_SPEED = 1000;
+const MIN_SPEED = 5000;
+let selectable;
 
 function init() {
     setTimeout(function (){
@@ -10,61 +16,36 @@ function init() {
             loadData(data);
             initial(regions);
             drawScenario(regions);
+            drawInterface();
             addEventListener();
         });
     }, 0);
 }
 
-function initial(data) {
-    contatore = 0;
-    alive = data.length;
-    visits = {};
-    ciclo = 1;
+function start() {
+    updateStartResetButton();
 
-    data.map(region => {
-        visits[region.id] = 0;
-    });
-}
-
-function loadData(data) {
-    regions = data["regions"];
-}
-
-function addEventListener() {
-    d3.select("body").on("keydown", function () {
-        if (d3.event.keyCode === 88) {
-
-            if(contatore === 4) {
-                contatore = 0
-            }else {
-                contatore++
-            }
-            //DO NOTHING
-        }
-    });
-}
-
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array
+    loop();
+    loopInterval = setInterval(loop, speed);
+    console.log(loopInterval);
 }
 
 function loop() {
-    updateArrangement(shuffle(regions));
-}
+    if(!paused) {
 
-function start() {
-    setTimeout(function () {
-        setInterval(loop, 3000);
-    }, 0);
-}
+        iteration++;
 
+        updateArrangement(shuffle(regions));
+
+        if (alive === 0) {
+            alert("STATE A CASA!")
+            clear();
+            init();
+        }
+    }
+}
 
 init();
 
-start();
 
 
