@@ -1,26 +1,16 @@
 width = 750;
 height = 800;
 
-
-
-/* Initialize canvas */
-svg = d3.select("#wrapper")
+let svg = d3.select("#wrapper")
     .append("svg")
     .classed("canvas", true)
     .attr("width", "100%")
     .attr("height", "100%")
     .attr("viewBox", "0 0 " + width + " " + height + "");
 
-function initial(data) {
-    data.map(region => {
-            visits[region.id] = 0;
-    });
-}
-
-function drawItaly(regions) {
-    console.log(regions);
+function drawScenario(data) {
     let italy = svg.selectAll(".region")
-        .data(regions)
+        .data(data)
         .enter()
         .append("path")
         .classed("region", true)
@@ -29,10 +19,7 @@ function drawItaly(regions) {
         .attr("id", function (d) {return d.id})
         .attr("stroke", "blue")
         .attr("fill", function () {return d3.interpolateReds(0)});
-}
 
-
-function draw(data) {
     let bats = svg.selectAll(".bat")
         .data(data)
         .enter()
@@ -48,7 +35,6 @@ function draw(data) {
             block(e)
         });
 }
-
 
 function updateArrangement(data) {
     ciclo++;
@@ -70,8 +56,6 @@ function updateArrangement(data) {
 }
 
 function block(e) {
-    console.log("regions")
-    console.log(regions);
     regions = regions.filter(value => value.id !== e.id);
 
     svg.select("#bat"+e.id)

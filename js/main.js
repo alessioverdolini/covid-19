@@ -1,31 +1,33 @@
-let dataset = [];
-let batsArrangements = [];
-let contatore = 0;
-let alive = 21;
-let regions = [];
-let ciclo = 1;
-let visits = {};
+let contatore;
+let alive;
+let regions;
+let ciclo;
+let visits;
 
 function init() {
-    contatore = 0;
-    alive = 21;
-    visits = {};
-    ciclo = 1;
     setTimeout(function (){
         d3.json("resources/position.json",).then(function (data) {
-            dataset = data;
-            loadData();
-            drawItaly(regions)
-            draw(regions);
-            addEventListener();
+            loadData(data);
             initial(regions);
+            drawScenario(regions);
+            addEventListener();
         });
     }, 0);
 }
 
-function loadData() {
-    batsArrangements = dataset['arrangements'];
-    regions = dataset["regions"];
+function initial(data) {
+    contatore = 0;
+    alive = data.length;
+    visits = {};
+    ciclo = 1;
+
+    data.map(region => {
+        visits[region.id] = 0;
+    });
+}
+
+function loadData(data) {
+    regions = data["regions"];
 }
 
 function addEventListener() {
@@ -37,7 +39,7 @@ function addEventListener() {
             }else {
                 contatore++
             }
-            updateArrangement(shuffle(regions))
+            //DO NOTHING
         }
     });
 }
