@@ -58,21 +58,14 @@ function clear() {
 
 function updateStartResetButton() {
     d3.select("#startBtn")
-        .text(function () {return started ? "Start" : "Reset"})
-        .attr("onclick", function(e){return started ? "start()" : "reset()"});
-
-    started = !started;
+        .text(function () {return started ? "Reset" : "Start"})
+        .attr("onclick", function(e){return started ? "reset()" : "start()"});
 }
 
 function updatePauseUnpauseButton() {
-    if(!started) {return;}
     d3.select("#pauseBtn")
-        .text(function () {return paused ? "Pause" : "Unpause"})
+        .text(function () {return paused ? "Unpause" : "Pause"})
         .attr("onclick", function(e){return paused ? "unpause()" : "pause()"});
-
-    paused = !paused;
-
-    selectable = !paused;
 }
 
 

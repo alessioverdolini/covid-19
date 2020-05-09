@@ -24,22 +24,34 @@ function init() {
 }
 
 function start() {
+    started = !started;
+
     updateStartResetButton();
 
     launchApplication();
 }
 
 function reset() {
+    started = !started;
+
     updateStartResetButton();
 
     init();
 }
 
 function pause() {
+    if(!started) {return;}
+    paused = !paused;
+    selectable = !paused && started;
+
     updatePauseUnpauseButton();
 }
 
 function unpause() {
+    if(!started) {return;}
+    paused = !paused;
+    selectable = !paused && started;
+
     updatePauseUnpauseButton();
 }
 
