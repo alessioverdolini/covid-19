@@ -48,6 +48,7 @@ function shuffle(array) {
 }
 
 function clear() {
+    interruptAnimation();
     svg.selectAll(".virus")
         .remove();
     svg.selectAll(".blocked")
@@ -66,6 +67,15 @@ function updatePauseUnpauseButton() {
     d3.select("#pauseBtn")
         .text(function () {return paused ? "Unpause" : "Pause"})
         .attr("onclick", function(e){return paused ? "unpause()" : "pause()"});
+}
+
+function interruptAnimation() {
+    svg.selectAll(".virus")
+        .transition()
+        .end();
+    svg.selectAll(".region")
+        .transition()
+        .end();
 }
 
 

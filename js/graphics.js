@@ -38,12 +38,12 @@ function drawScenario(data) {
 
 function drawGui() {
     d3.select("#startBtn")
-        .text(function () {return started ? "Reset" : "Start"})
-        .attr("onclick", function(e){return started ? "reset()" : "start()"});
+        .text("Start")
+        .attr("onclick", "start()");
 
     d3.select("#pauseBtn")
-        .text(function () {return paused ? "Unpause" : "Pause"})
-        .attr("onclick", function(e){return paused ? "unpause()" : "pause()"})
+        .text("Pause")
+        .attr("onclick", "pause()");
 }
 
 function updateArrangement(data) {
@@ -85,7 +85,7 @@ function updateImmunity(boolean) {
 
     if(boolean){
         svg.selectAll(".virus")
-            .attr('xlink:href', 'resources/immuni.svg')
+            .attr('xlink:href', 'resources/shield.svg')
     }
     else{
         svg.selectAll(".virus")

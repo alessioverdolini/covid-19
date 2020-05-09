@@ -24,16 +24,16 @@ function init() {
 }
 
 function start() {
-    started = !started;
 
+    started = !started;
     updateStartResetButton();
 
     launchApplication();
 }
 
 function reset() {
-    started = !started;
 
+    started = !started;
     updateStartResetButton();
 
     init();
@@ -41,16 +41,22 @@ function reset() {
 
 function pause() {
     if(!started) {return;}
+    interruptAnimation();
+
+    selectable = paused && started;
+
     paused = !paused;
-    selectable = !paused && started;
 
     updatePauseUnpauseButton();
 }
 
 function unpause() {
     if(!started) {return;}
+    interruptAnimation();
+
+    selectable = paused && started;
+
     paused = !paused;
-    selectable = !paused && started;
 
     updatePauseUnpauseButton();
 }
