@@ -11,23 +11,43 @@ const MIN_SPEED = 5000;
 let selectable;
 
 function init() {
+    clear();
     setTimeout(function (){
         d3.json("resources/position.json",).then(function (data) {
             loadData(data);
             initEnv(regions);
             drawScenario(regions);
-            drawInterface();
+            drawGui();
             addEventListener();
         });
     }, 0);
 }
 
-function start(speedChanged = false) {
-    if(!speedChanged)
-        updateStartResetButton();
+function start() {
+    updateStartResetButton();
 
-    loop();
-    loopInterval = setInterval(loop, speed);
+    launchApplication();
+}
+
+function reset() {
+    updateStartResetButton();
+
+    init();
+}
+
+function pause() {
+    updatePauseUnpauseButton();
+}
+
+function unpause() {
+    updatePauseUnpauseButton();
+}
+
+function launchApplication() {
+    if(started) {
+        loop();
+        loopInterval = setInterval(loop, speed);
+    }
 }
 
 function loop() {
@@ -39,7 +59,6 @@ function loop() {
 
         if (alive === 0) {
             alert("STATE A CASA!")
-            clear();
             init();
         }
     }

@@ -6,6 +6,7 @@ function initEnv(data) {
     started = false;
     speed = 2000;
     selectable = false;
+    clearInterval(loopInterval);
 
     data.map(region => {
         visits[region.id] = 0;
@@ -16,10 +17,14 @@ function initEnv(data) {
         .attr("min", MAX_SPEED)
         .attr("max", MIN_SPEED)
         .on("change", function(d){
-            clearInterval(loopInterval);
-            speed = this.value;
-            start(true);
+            updateSpeed(this.value)
     })
+}
+
+function updateSpeed(speedValue){
+    speed = speedValue;
+    clearInterval(loopInterval);
+    launchApplication();
 }
 
 function loadData(data) {
@@ -42,13 +47,6 @@ function shuffle(array) {
     return array
 }
 
-function pause() {
-    d3.select("#pauseBtn")
-        .text(function () {return paused ? "Pause" : "Unpause"});
-
-    paused = !paused;
-}
-
 function clear() {
     svg.selectAll(".virus")
         .remove();
@@ -56,14 +54,6 @@ function clear() {
         .remove();
     svg.selectAll(".region")
         .remove();
-    clearInterval(loopInterval);
-}
-
-function reset() {
-    clearInterval(loopInterval);
-    updateStartResetButton();
-    clear();
-    init();
 }
 
 function updateStartResetButton() {
@@ -72,6 +62,17 @@ function updateStartResetButton() {
         .attr("onclick", function(e){return started ? "start()" : "reset()"});
 
     started = !started;
+}
+
+function updatePauseUnpauseButton() {
+    if(!started) {return;}
+    d3.select("#pauseBtn")
+        .text(function () {return paused ? "Pause" : "Unpause"})
+        .attr("onclick", function(e){return paused ? "unpause()" : "pause()"});
+
+    paused = !paused;
+
+    selectable = !paused;
 }
 
 

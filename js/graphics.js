@@ -36,20 +36,26 @@ function drawScenario(data) {
         });
 }
 
-function drawInterface() {
-}
+function drawGui() {
+    d3.select("#startBtn")
+        .text(function () {return started ? "Reset" : "Start"})
+        .attr("onclick", function(e){return started ? "reset()" : "start()"});
 
+    d3.select("#pauseBtn")
+        .text(function () {return paused ? "Unpause" : "Pause"})
+        .attr("onclick", function(e){return paused ? "unpause()" : "pause()"})
+}
 
 function updateArrangement(data) {
     svg.selectAll(".virus")
         .data(data)
         .transition()
         .duration(speed-800)
-        .on("start", function (){immuni(true)})
+        .on("start", function (){updateImmunity(true)})
         .attr('id', function (d) {return "virus" + d.id})
         .attr('x', function (d) {return d.x})
         .attr('y', function (d) {return d.y})
-        .on("end", function (){immuni(false)});
+        .on("end", function (){updateImmunity(false)});
 
     data.map(region => {visits[region.id]++;});
 
@@ -74,7 +80,7 @@ function block(e) {
     regions = regions.filter(value => value.id !== e.id);
 }
 
-function immuni(boolean) {
+function updateImmunity(boolean) {
     selectable = !boolean;
 
     if(boolean){
