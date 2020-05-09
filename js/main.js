@@ -14,7 +14,7 @@ function init() {
     setTimeout(function (){
         d3.json("resources/position.json",).then(function (data) {
             loadData(data);
-            initial(regions);
+            initEnv(regions);
             drawScenario(regions);
             drawInterface();
             addEventListener();
@@ -22,12 +22,12 @@ function init() {
     }, 0);
 }
 
-function start() {
-    updateStartResetButton();
+function start(speedChanged = false) {
+    if(!speedChanged)
+        updateStartResetButton();
 
     loop();
     loopInterval = setInterval(loop, speed);
-    console.log(loopInterval);
 }
 
 function loop() {

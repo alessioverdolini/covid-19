@@ -20,13 +20,13 @@ function drawScenario(data) {
         .attr("stroke", "blue")
         .attr("fill", function () {return d3.interpolateReds(0)});
 
-    let bats = svg.selectAll(".bat")
+    let virus = svg.selectAll(".virus")
         .data(data)
         .enter()
         .append("image")
-        .classed("bat", true)
+        .classed("virus", true)
         .attr('xlink:href', 'resources/virus.svg')
-        .attr('id', function (d) {return "bat" + d.id})
+        .attr('id', function (d) {return "virus" + d.id})
         .attr('width', 40)
         .attr('height', 40)
         .attr('x', function (d) {return d.x})
@@ -41,15 +41,15 @@ function drawInterface() {
 
 
 function updateArrangement(data) {
-    selectable = false;
-
-    svg.selectAll(".bat")
+    svg.selectAll(".virus")
         .data(data)
         .transition()
         .duration(speed-800)
-        .attr('id', function (d) {return "bat" + d.id})
+        .on("start", function (){immuni(true)})
+        .attr('id', function (d) {return "virus" + d.id})
         .attr('x', function (d) {return d.x})
-        .attr('y', function (d) {return d.y});
+        .attr('y', function (d) {return d.y})
+        .on("end", function (){immuni(false)});
 
     data.map(region => {visits[region.id]++;});
 
@@ -57,24 +57,32 @@ function updateArrangement(data) {
         .transition()
         .duration(speed-800)
         .attr("fill", function (e) {return d3.interpolateReds(visits[e.id]/iteration);});
-
-    selectable=true;
 }
 
 function block(e) {
-    console.log(selectable)
-    if(selectable) {
-        svg.select("#bat" + e.id)
-            .attr("class", "blocked")
-            .attr('xlink:href', 'resources/no-virus.svg')
-            .attr('width', 40)
-            .attr('height', 40)
-            .on("click", function () {
-            })
-            .exit();
+    if(!selectable) {
+        return;
+    }
 
-        regions = regions.filter(value => value.id !== e.id);
+    alive--;
 
-        alive--;
+    svg.select("#virus" + e.id)
+        .attr("class", "blocked")
+        .attr('xlink:href', 'resources/no-virus.svg')
+        .on("click", function () {});
+
+    regions = regions.filter(value => value.id !== e.id);
+}
+
+function immuni(boolean) {
+    selectable = !boolean;
+
+    if(boolean){
+        svg.selectAll(".virus")
+            .attr('xlink:href', 'resources/immuni.svg')
+    }
+    else{
+        svg.selectAll(".virus")
+            .attr('xlink:href', 'resources/virus.svg')
     }
 }

@@ -1,4 +1,4 @@
-function initial(data) {
+function initEnv(data) {
     alive = data.length;
     visits = {};
     iteration = 1;
@@ -16,7 +16,9 @@ function initial(data) {
         .attr("min", MAX_SPEED)
         .attr("max", MIN_SPEED)
         .on("change", function(d){
-        speed = this.value;
+            clearInterval(loopInterval);
+            speed = this.value;
+            start(true);
     })
 }
 
@@ -48,12 +50,13 @@ function pause() {
 }
 
 function clear() {
-    svg.selectAll(".bat")
+    svg.selectAll(".virus")
         .remove();
     svg.selectAll(".blocked")
         .remove();
     svg.selectAll(".region")
         .remove();
+    clearInterval(loopInterval);
 }
 
 function reset() {
@@ -68,12 +71,7 @@ function updateStartResetButton() {
         .text(function () {return started ? "Start" : "Reset"})
         .attr("onclick", function(e){return started ? "start()" : "reset()"});
 
-    d3.select("#speedRange")
-        .attr("disabled", function () {return started ? null : started});
-
     started = !started;
-
-
 }
 
 
