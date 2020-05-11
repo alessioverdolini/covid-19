@@ -107,7 +107,7 @@ function updateArrangement(data) {
     svg.selectAll(".virus")
         .data(data)
         .transition()
-        .duration(speed-800)
+        .duration(speed*0.7)
         .on("start", function (){updateImmunity(true)})
         .attr('id', function (d) {return "virus" + d.id})
         .attr('x', function (d) {return d.x})
@@ -118,7 +118,7 @@ function updateArrangement(data) {
 
     svg.selectAll(".region")
         .transition()
-        .duration(speed-800)
+        .duration(speed*0.7)
         .attr("fill", function (e) {return d3.interpolateReds(visits[e.id]/iteration);});
 }
 

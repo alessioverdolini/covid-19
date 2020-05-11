@@ -75,7 +75,6 @@ function loop() {
         updateArrangement(shuffle(regions));
 
         if (alive === 0) {
-            alert("STATE A CASA!")
             init();
         }
     }

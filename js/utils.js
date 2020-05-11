@@ -4,7 +4,7 @@ function initEnv(data) {
     iteration = 1;
     paused = false;
     started = false;
-    speed = 4000;
+    speed = 2000;
     selectable = false;
     clearInterval(loopInterval);
 
@@ -14,10 +14,7 @@ function initEnv(data) {
 }
 
 function updateSpeed(speedValue){
-    console.log(speedValue);
-    console.log(Math.abs(speedValue));
-
-    speed = Math.abs(speedValue);
+    speed = speedValue*1000;
     clearInterval(loopInterval);
     launchApplication();
 }
