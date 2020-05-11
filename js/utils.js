@@ -47,7 +47,7 @@ function shuffle(array) {
     return array
 }
 
-function clear() {
+function clearScenario() {
     interruptAnimation();
     svg.selectAll(".virus")
         .remove();
@@ -61,6 +61,9 @@ function updateStartResetButton() {
     d3.select("#startBtn")
         .text(function () {return started ? "Reset" : "Start"})
         .attr("onclick", function(e){return started ? "reset()" : "start()"});
+
+    d3.select("#pauseBtn")
+        .attr("disabled", function () {return started ? null : started});
 }
 
 function updatePauseUnpauseButton() {

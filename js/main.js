@@ -11,7 +11,7 @@ const MIN_SPEED = 5000;
 let selectable;
 
 function init() {
-    clear();
+    clearScenario();
     setTimeout(function (){
         d3.json("resources/position.json",).then(function (data) {
             loadData(data);

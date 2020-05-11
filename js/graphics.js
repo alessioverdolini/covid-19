@@ -1,5 +1,5 @@
-width = 750;
-height = 800;
+let viewBoxWidth = 750;
+let viewBoxHeight = 800;
 
 let screenWidth = 0;
 let screenHeight = 0;
@@ -11,7 +11,7 @@ let svg = d3.select(".main")
     .classed("canvas", true)
     .attr("width", "100%")
     .attr("height", screenHeight+"px")
-    .attr("viewBox", "-50 -50 " + width + " " + height + "");
+    .attr("viewBox", "-50 -50 " + viewBoxWidth + " " + viewBoxHeight + "");
 
 function drawScenario(data) {
     let italy = svg.selectAll(".region")
