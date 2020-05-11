@@ -57,7 +57,7 @@ function updateStartResetButton() {
 }
 
 function updatePauseUnpauseButton() {
-    d3.select("#pauseBtn")
+    pauseBtn
         .text(function () {return paused ? "Unpause" : "Pause"})
         .attr("onclick", function(e){return paused ? "unpause()" : "pause()"});
 }

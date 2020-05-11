@@ -9,6 +9,9 @@ computeScreenSize();
 let svg;
 let italy;
 let virus;
+let gui;
+let startBtn;
+let pauseBtn;
 
 function drawScenario(data) {
     svg = d3.select(".main")
@@ -43,6 +46,23 @@ function drawScenario(data) {
         .on("click", function(e){
             block(e)
         });
+
+    gui = d3.select(".gui");
+
+    startBtn = gui
+        .append("button")
+        .classed("button", true)
+        .attr("id", "startBtn")
+        .text("Start")
+        .attr("onclick", "start()");
+
+    pauseBtn = gui
+        .append("button")
+        .classed("button", true)
+        .attr("id", "pauseBtn")
+        .text("Pause")
+        .attr("onclick", "pause()")
+        .attr("disabled", true);
 }
 
 function clearScenario() {
@@ -56,19 +76,11 @@ function clearScenario() {
             .remove();
         d3.select(".canvas")
             .remove();
+        d3.select("#startBtn").remove();
+        d3.select("#pauseBtn").remove();
     }catch (e) {
         //Catch object not found exceptions
     }
-}
-
-function drawGui() {
-    d3.select("#startBtn")
-        .text("Start")
-        .attr("onclick", "start()");
-
-    d3.select("#pauseBtn")
-        .text("Pause")
-        .attr("onclick", "pause()");
 }
 
 function updateArrangement(data) {
