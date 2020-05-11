@@ -6,15 +6,19 @@ let screenHeight = 0;
 
 computeScreenSize();
 
-let svg = d3.select(".main")
-    .append("svg")
-    .classed("canvas", true)
-    .attr("width", "100%")
-    .attr("height", screenHeight+"px")
-    .attr("viewBox", "-50 -50 " + viewBoxWidth + " " + viewBoxHeight + "");
+let svg;
+let italy;
+let virus;
 
 function drawScenario(data) {
-    let italy = svg.selectAll(".region")
+    svg = d3.select(".main")
+        .append("svg")
+        .classed("canvas", true)
+        .attr("width", "100%")
+        .attr("height", screenHeight+"px")
+        .attr("viewBox", "-50 -50 " + viewBoxWidth + " " + viewBoxHeight + "");
+
+    italy = svg.selectAll(".region")
         .data(data)
         .enter()
         .append("path")
@@ -25,7 +29,7 @@ function drawScenario(data) {
         .attr("stroke", "blue")
         .attr("fill", function () {return d3.interpolateReds(0)});
 
-    let virus = svg.selectAll(".virus")
+    virus = svg.selectAll(".virus")
         .data(data)
         .enter()
         .append("image")
@@ -39,6 +43,22 @@ function drawScenario(data) {
         .on("click", function(e){
             block(e)
         });
+}
+
+function clearScenario() {
+    try {
+        interruptAnimation();
+        svg.selectAll(".virus")
+            .remove();
+        svg.selectAll(".blocked")
+            .remove();
+        svg.selectAll(".region")
+            .remove();
+        d3.select(".canvas")
+            .remove();
+    }catch (e) {
+        //Catch object not found exceptions
+    }
 }
 
 function drawGui() {

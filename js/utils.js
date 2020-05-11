@@ -47,16 +47,6 @@ function shuffle(array) {
     return array
 }
 
-function clearScenario() {
-    interruptAnimation();
-    svg.selectAll(".virus")
-        .remove();
-    svg.selectAll(".blocked")
-        .remove();
-    svg.selectAll(".region")
-        .remove();
-}
-
 function updateStartResetButton() {
     d3.select("#startBtn")
         .text(function () {return started ? "Reset" : "Start"})
