@@ -16,6 +16,10 @@
     background-color: lightgray;
 }
 
+#speedRange {
+    direction: rtl
+}
+
 /*button {*/
 /*    background-color: #4CAF50; !* Green *!*/
 /*    border: 2px solid #4CAF50;*/

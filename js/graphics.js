@@ -63,6 +63,24 @@ function drawScenario(data) {
         .text("Pause")
         .attr("onclick", "pause()")
         .attr("disabled", true);
+
+    gui.append("span")
+        .classed("rangeLabel", true)
+        .text("Slow");
+
+    gui.append("input")
+        .attr("type", "range")
+        .attr("id", "speedRange")
+        .attr("value", speed/1000)
+        .attr("min", MAX_SPEED/1000)
+        .attr("max", MIN_SPEED/1000)
+        .on("change", function(d){
+            updateSpeed(this.value)
+        });
+
+    gui.append("span")
+        .classed("rangeLabel", true)
+        .text("Fast");
 }
 
 function clearScenario() {
@@ -78,6 +96,8 @@ function clearScenario() {
             .remove();
         d3.select("#startBtn").remove();
         d3.select("#pauseBtn").remove();
+        d3.select("#speedRange").remove();
+        d3.selectAll(".rangeLabel").remove();
     }catch (e) {
         //Catch object not found exceptions
     }
@@ -103,9 +123,7 @@ function updateArrangement(data) {
 }
 
 function block(e) {
-    if(!selectable) {
-        return;
-    }
+    if(!selectable) {return;}
 
     alive--;
 
@@ -138,5 +156,4 @@ function screenResized() {
 function computeScreenSize(){
     screenHeight = window.innerHeight-20;
     screenWidth = window.innerWidth-20;
-    console.log(screenHeight);
 }

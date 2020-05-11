@@ -4,25 +4,20 @@ function initEnv(data) {
     iteration = 1;
     paused = false;
     started = false;
-    speed = 2000;
+    speed = 4000;
     selectable = false;
     clearInterval(loopInterval);
 
     data.map(region => {
         visits[region.id] = 0;
     });
-
-    d3.select("#speedRange")
-        .attr("value", speed)
-        .attr("min", MAX_SPEED)
-        .attr("max", MIN_SPEED)
-        .on("change", function(d){
-            updateSpeed(this.value)
-    })
 }
 
 function updateSpeed(speedValue){
-    speed = speedValue;
+    console.log(speedValue);
+    console.log(Math.abs(speedValue));
+
+    speed = Math.abs(speedValue);
     clearInterval(loopInterval);
     launchApplication();
 }
