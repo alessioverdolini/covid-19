@@ -1,12 +1,17 @@
 width = 750;
 height = 800;
 
-let svg = d3.select("#wrapper")
+let screenWidth = 0;
+let screenHeight = 0;
+
+computeScreenSize();
+
+let svg = d3.select(".main")
     .append("svg")
     .classed("canvas", true)
     .attr("width", "100%")
-    .attr("height", "100%")
-    .attr("viewBox", "0 0 " + width + " " + height + "");
+    .attr("height", screenHeight+"px")
+    .attr("viewBox", "-50 -50 " + width + " " + height + "");
 
 function drawScenario(data) {
     let italy = svg.selectAll(".region")
@@ -91,4 +96,15 @@ function updateImmunity(boolean) {
         svg.selectAll(".virus")
             .attr('xlink:href', 'resources/virus.svg')
     }
+}
+
+function screenResized() {
+    computeScreenSize();
+    svg.attr("height", screenHeight+"px");
+}
+
+function computeScreenSize(){
+    screenHeight = window.innerHeight-20;
+    screenWidth = window.innerWidth-20;
+    console.log(screenHeight);
 }

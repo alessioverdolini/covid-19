@@ -1,35 +1,17 @@
-* {
-    box-sizing: border-box;
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    background-color: red;
 }
 
-.page:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.first-column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-    height: 600px;
-    background-color: gray;
-}
-
-.second-column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-    height: 600px;
-    background-color: lightgray;
-}
-
-#wrapper {
-    height: 90%;
+.main {
+    width: 40%;
     background-color: dodgerblue;
 }
 
-#gui {
-    height: 10%;
-    background-color: red;
+.gui {
+    width: 60%;
+    background-color: lightgray;
 }

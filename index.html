@@ -7,21 +7,15 @@
     <script src="https://d3js.org/d3.v5.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
-<body>
-<div class="page">
-    <div class="first-column">
-        <div id="wrapper"></div>
-        <div id="gui">
-            <button id="startBtn" onclick="start()">Start</button>
-            <button id="pauseBtn" onclick="pause()">Pause</button>
-            <label for="speedRange">Fast</label>
-            <input id="speedRange" type="range" min="0" max="5000"/>
-            <label for="speedRange">Slow</label>
-        </div>
-    </div>
-
-    <div id="stats" class="second-column">
-        <h1 align="center">CONTROL PANEL</h1>
+<body onresize="screenResized()">
+<div class="wrapper">
+    <div class="main"></div>
+    <div class="gui">
+        <button id="startBtn" onclick="start()">Start</button>
+        <button id="pauseBtn" onclick="pause()">Pause</button>
+        <label for="speedRange">Fast</label>
+        <input id="speedRange" type="range" min="0" max="5000"/>
+        <label for="speedRange">Slow</label>
     </div>
 </div>
 
