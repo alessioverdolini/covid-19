@@ -14,7 +14,9 @@ let startBtn;
 let pauseBtn;
 
 function drawScenario(data) {
-    svg = d3.select(".main")
+    svg = d3.select(".wrapper")
+        .append("div")
+        .classed("main", true)
         .append("svg")
         .classed("canvas", true)
         .attr("width", "100%")
@@ -47,7 +49,9 @@ function drawScenario(data) {
             block(e)
         });
 
-    gui = d3.select(".gui");
+    gui = d3.select(".wrapper")
+        .append("div")
+        .classed("gui", true);
 
     startBtn = gui
         .append("button")
@@ -86,18 +90,12 @@ function drawScenario(data) {
 function clearScenario() {
     try {
         interruptAnimation();
-        svg.selectAll(".virus")
-            .remove();
-        svg.selectAll(".blocked")
-            .remove();
-        svg.selectAll(".region")
-            .remove();
-        d3.select(".canvas")
-            .remove();
         d3.select("#startBtn").remove();
         d3.select("#pauseBtn").remove();
         d3.select("#speedRange").remove();
         d3.selectAll(".rangeLabel").remove();
+        d3.select(".gui").remove();
+        d3.select(".main").remove();
     }catch (e) {
         //Catch object not found exceptions
     }
