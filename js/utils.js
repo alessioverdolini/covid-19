@@ -58,6 +58,9 @@ function interruptAnimation() {
     svg.selectAll(".virus")
         .transition()
         .end();
+    svg.selectAll(".blocked")
+        .transition()
+        .end();
     svg.selectAll(".region")
         .transition()
         .end();

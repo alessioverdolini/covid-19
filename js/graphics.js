@@ -12,6 +12,7 @@ let virus;
 let gui;
 let startBtn;
 let pauseBtn;
+let controlPanel;
 
 function drawScenario(data) {
     svg = d3.select(".wrapper")
@@ -53,14 +54,18 @@ function drawScenario(data) {
         .append("div")
         .classed("gui", true);
 
-    startBtn = gui
+    controlPanel = gui
+        .append("div")
+        .classed("controlPanel", true);
+
+    startBtn = controlPanel
         .append("button")
         .classed("button", true)
         .attr("id", "startBtn")
         .text("Start")
         .attr("onclick", "start()");
 
-    pauseBtn = gui
+    pauseBtn = controlPanel
         .append("button")
         .classed("button", true)
         .attr("id", "pauseBtn")
@@ -68,11 +73,11 @@ function drawScenario(data) {
         .attr("onclick", "pause()")
         .attr("disabled", true);
 
-    gui.append("span")
+    controlPanel.append("span")
         .classed("rangeLabel", true)
         .text("Slow");
 
-    gui.append("input")
+    controlPanel.append("input")
         .attr("type", "range")
         .attr("id", "speedRange")
         .attr("value", speed/1000)
@@ -82,7 +87,7 @@ function drawScenario(data) {
             updateSpeed(this.value)
         });
 
-    gui.append("span")
+    controlPanel.append("span")
         .classed("rangeLabel", true)
         .text("Fast");
 }
@@ -90,10 +95,6 @@ function drawScenario(data) {
 function clearScenario() {
     try {
         interruptAnimation();
-        d3.select("#startBtn").remove();
-        d3.select("#pauseBtn").remove();
-        d3.select("#speedRange").remove();
-        d3.selectAll(".rangeLabel").remove();
         d3.select(".gui").remove();
         d3.select(".main").remove();
     }catch (e) {
